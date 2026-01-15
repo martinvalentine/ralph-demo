@@ -21,35 +21,42 @@ This is a demo project for testing the Ralph autonomous AI agent workflow.
 
 ## Running Ralph
 
-Ralph is available as a git submodule in the `ralph/` folder. You can call it directly from there:
+Set the project root variable (optional, defaults to current directory):
+```bash
+export PROJECT_ROOT="$(pwd)"  # Or set to your project path
+```
 
-To run Ralph with the default 10 iterations (auto-detects Amp or OpenCode):
+Ralph is available in the `scripts/ralph/` folder. To run Ralph with the default 10 iterations (auto-detects Amp or OpenCode):
 
 ```bash
-./ralph/ralph.sh
+cd "$PROJECT_ROOT"
+./scripts/ralph/ralph.sh
 ```
 
 To run with a custom number of iterations:
 
 ```bash
-./ralph/ralph.sh 5
+cd "$PROJECT_ROOT"
+./scripts/ralph/ralph.sh 5
 ```
 
 To explicitly use OpenCode instead of Amp:
 
 ```bash
-./ralph/ralph.sh 10 opencode
+cd "$PROJECT_ROOT"
+./scripts/ralph/ralph.sh 10 opencode
 ```
 
 To explicitly use Amp:
 
 ```bash
-./ralph/ralph.sh 10 amp
+cd "$PROJECT_ROOT"
+./scripts/ralph/ralph.sh 10 amp
 ```
 
-**Note:** Make sure you have `prd.json` and `progress.txt` in the `ralph/` folder, or create symlinks from your project root.
+**Note:** Make sure you have `prd.json` and `progress.txt` in the `scripts/ralph/` folder.
 
-See `ralph/README-OPencode.md` for OpenCode-specific setup instructions.
+See `scripts/ralph/README-OPencode.md` for OpenCode-specific setup instructions.
 
 ## Usage Examples
 
@@ -67,14 +74,20 @@ npm start
 
 ### Ralph Workflow Examples
 ```bash
+# Set project root (if not already set)
+export PROJECT_ROOT="$(pwd)"
+
 # Run Ralph with default settings
-./ralph/ralph.sh
+cd "$PROJECT_ROOT"
+./scripts/ralph/ralph.sh
 
 # Run Ralph for 5 iterations
-./ralph/ralph.sh 5
+cd "$PROJECT_ROOT"
+./scripts/ralph/ralph.sh 5
 
 # Run Ralph with OpenCode
-./ralph/ralph.sh 10 opencode
+cd "$PROJECT_ROOT"
+./scripts/ralph/ralph.sh 10 opencode
 
 # Check project status
 npm run typecheck
@@ -82,14 +95,15 @@ npm run typecheck
 
 ## Files
 
-- `ralph/ralph.sh` - The main Ralph loop script (git submodule)
-- `ralph/prompt.md` - Instructions for each iteration
-- `ralph/prd.json` - Product requirements document with user stories (create this in ralph/ folder)
-- `ralph/progress.txt` - Progress log and learnings (created automatically)
+- `scripts/ralph/ralph.sh` - The main Ralph loop script
+- `scripts/ralph/prompt.md` - Instructions for each iteration
+- `scripts/ralph/prd.json` - Product requirements document with user stories (create this in scripts/ralph/ folder)
+- `scripts/ralph/progress.txt` - Progress log and learnings (created automatically)
+- `ralph/` - Git submodule (source for Ralph scripts, copied to scripts/ralph/ by setup script)
 
 ## Current PRD
 
-The PRD (`ralph/prd.json`) should contain your user stories. Example structure:
+The PRD (`scripts/ralph/prd.json`) should contain your user stories. Example structure:
 1. Add demo configuration file
 2. Create README with setup instructions
 3. Add package.json with dependencies
@@ -99,13 +113,17 @@ These are intentionally simple to test the Ralph workflow.
 ## Checking Status
 
 ```bash
+# Set project root if not already set
+export PROJECT_ROOT="${PROJECT_ROOT:-$(pwd)}"
+
 # See which stories are done
-cat ralph/prd.json | jq '.userStories[] | {id, title, passes}'
+cat "$PROJECT_ROOT/scripts/ralph/prd.json" | jq '.userStories[] | {id, title, passes}'
 
 # See learnings from previous iterations
-cat ralph/progress.txt
+cat "$PROJECT_ROOT/scripts/ralph/progress.txt"
 
 # Check git history
+cd "$PROJECT_ROOT"
 git log --oneline -10
 ```
 
