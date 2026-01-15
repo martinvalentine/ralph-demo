@@ -89,10 +89,12 @@ for i in $(seq 1 $MAX_ITERATIONS); do
     OUTPUT=$(cat "$SCRIPT_DIR/prompt.md" | amp --dangerously-allow-all 2>&1 | tee /dev/stderr) || true
   elif [ "$AGENT_CLI" = "opencode" ]; then
     # OpenCode command - reads prompt from stdin
-    # You may need to specify an agent: opencode --agent build run
+    # Using model: opencode/big-pickle (default)
+    # Other free models available: opencode/glm-4.7-free, opencode/minimax-m2.1-free
+    # To use your own API keys, configure with: opencode auth login
     # Format can be 'default' or 'json' - using default for readable output
     PROMPT_CONTENT=$(cat "$SCRIPT_DIR/prompt.md")
-    OUTPUT=$(echo "$PROMPT_CONTENT" | opencode run --format default 2>&1 | tee /dev/stderr) || true
+    OUTPUT=$(echo "$PROMPT_CONTENT" | opencode run --model opencode/big-pickle --format default 2>&1 | tee /dev/stderr) || true
   else
     echo "Error: Unknown agent CLI: $AGENT_CLI"
     exit 1
