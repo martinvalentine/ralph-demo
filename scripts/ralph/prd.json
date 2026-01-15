@@ -1,46 +1,62 @@
 {
-  "project": "DemoProject",
-  "branchName": "ralph/demo-feature",
-  "description": "Demo Feature - A simple feature to test Ralph workflow",
+  "project": "MyApp",
+  "branchName": "ralph/task-priority",
+  "description": "Task Priority System - Add priority levels to tasks",
   "userStories": [
     {
       "id": "US-001",
-      "title": "Add demo configuration file",
-      "description": "As a developer, I need a configuration file to store demo settings.",
+      "title": "Add priority field to database",
+      "description": "As a developer, I need to store task priority so it persists across sessions.",
       "acceptanceCriteria": [
-        "Create config.json file in project root",
-        "Include at least 3 configuration options",
+        "Add priority column to tasks table: 'high' | 'medium' | 'low' (default 'medium')",
+        "Generate and run migration successfully",
         "Typecheck passes"
       ],
       "priority": 1,
-      "passes": true,
+      "passes": false,
       "notes": ""
     },
     {
       "id": "US-002",
-      "title": "Create README with setup instructions",
-      "description": "As a developer, I want clear setup instructions for this project.",
+      "title": "Display priority indicator on task cards",
+      "description": "As a user, I want to see task priority at a glance.",
       "acceptanceCriteria": [
-        "README.md exists in project root",
-        "Includes installation steps",
-        "Includes usage examples",
-        "Typecheck passes"
+        "Each task card shows colored priority badge (red=high, yellow=medium, gray=low)",
+        "Priority visible without hovering or clicking",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
       ],
       "priority": 2,
-      "passes": true,
+      "passes": false,
       "notes": ""
     },
     {
       "id": "US-003",
-      "title": "Add package.json with dependencies",
-      "description": "As a developer, I need a package.json to manage project dependencies.",
+      "title": "Add priority selector to task edit",
+      "description": "As a user, I want to change a task's priority when editing it.",
       "acceptanceCriteria": [
-        "package.json exists with name and version",
-        "Includes at least 2 dependencies",
-        "Includes scripts section with start and test commands",
-        "Typecheck passes"
+        "Priority dropdown in task edit modal",
+        "Shows current priority as selected",
+        "Saves immediately on selection change",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
       ],
       "priority": 3,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-004",
+      "title": "Filter tasks by priority",
+      "description": "As a user, I want to filter the task list to see only high-priority items.",
+      "acceptanceCriteria": [
+        "Filter dropdown with options: All | High | Medium | Low",
+        "Filter persists in URL params",
+        "Empty state message when no tasks match filter",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 4,
       "passes": false,
       "notes": ""
     }
