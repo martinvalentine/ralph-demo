@@ -27,13 +27,18 @@ This guide helps you test the Ralph autonomous AI agent workflow.
 
 3. **Git repository initialized**
    ```bash
-   cd /home/martinvalentine/Documents/IT/ralph-test/test-ralph
+   cd "$PROJECT_ROOT"
    git status  # Should show a git repo
    ```
 
 ## Test Setup
 
-The test PRD is already created at `ralph/prd.json` with 3 simple stories:
+Set the project root variable:
+```bash
+export PROJECT_ROOT="$(pwd)"  # Or set to your project path
+```
+
+The test PRD is already created at `scripts/ralph/prd.json` with 3 simple stories:
 - US-001: Create test configuration file
 - US-002: Add test script to package.json
 - US-003: Create TEST.md documentation
@@ -43,52 +48,52 @@ The test PRD is already created at `ralph/prd.json` with 3 simple stories:
 ### Option 1: Test with OpenCode (Recommended)
 
 ```bash
-cd /home/martinvalentine/Documents/IT/ralph-test/test-ralph
+cd "$PROJECT_ROOT"
 
 # Run Ralph with OpenCode for 3 iterations
-./ralph/ralph.sh 3 opencode
+./scripts/ralph/ralph.sh 3 opencode
 ```
 
 ### Option 2: Auto-detect CLI
 
 ```bash
-cd /home/martinvalentine/Documents/IT/ralph-test/test-ralph
+cd "$PROJECT_ROOT"
 
 # Will auto-detect OpenCode or Amp
-./ralph/ralph.sh 3
+./scripts/ralph/ralph.sh 3
 ```
 
 ### Option 3: Test with Amp (if you have credits)
 
 ```bash
-cd /home/martinvalentine/Documents/IT/ralph-test/test-ralph
+cd "$PROJECT_ROOT"
 
 # Run with Amp
-./ralph/ralph.sh 3 amp
+./scripts/ralph/ralph.sh 3 amp
 ```
 
 ## What to Expect
 
 Ralph will:
-1. Read `ralph/prd.json` to find the first story with `passes: false`
+1. Read `scripts/ralph/prd.json` to find the first story with `passes: false`
 2. Check out or create the branch `ralph/test-feature`
 3. Implement the story (e.g., create test-config.json)
 4. Run quality checks (typecheck)
 5. Commit changes with message: `feat: US-001 - Create test configuration file`
-6. Update `ralph/prd.json` to set `passes: true` for completed story
-7. Append progress to `ralph/progress.txt`
+6. Update `scripts/ralph/prd.json` to set `passes: true` for completed story
+7. Append progress to `scripts/ralph/progress.txt`
 8. Repeat for next story
 
 ## Monitoring Progress
 
 ### Check which stories are done:
 ```bash
-cat ralph/prd.json | jq '.userStories[] | {id, title, passes}'
+cat "$PROJECT_ROOT/scripts/ralph/prd.json" | jq '.userStories[] | {id, title, passes}'
 ```
 
 ### View progress log:
 ```bash
-cat ralph/progress.txt
+cat "$PROJECT_ROOT/scripts/ralph/progress.txt"
 ```
 
 ### Check git commits:
@@ -107,8 +112,8 @@ After running, you should see:
 - New files created (test-config.json, TEST.md)
 - package.json updated with test script
 - Git commits for each completed story
-- `ralph/prd.json` updated with `passes: true` for completed stories
-- `ralph/progress.txt` with learnings from each iteration
+- `scripts/ralph/prd.json` updated with `passes: true` for completed stories
+- `scripts/ralph/progress.txt` with learnings from each iteration
 
 ## Troubleshooting
 
@@ -135,7 +140,7 @@ brew install jq
 
 ### Git not initialized
 ```bash
-cd /home/martinvalentine/Documents/IT/ralph-test/test-ralph
+cd "$PROJECT_ROOT"
 git init
 git commit --allow-empty -m "Initial commit"
 ```
@@ -157,7 +162,7 @@ If you need to stop Ralph mid-execution:
 To start fresh:
 ```bash
 # Reset PRD (all stories back to passes: false)
-cat > ralph/prd.json << 'EOF'
+cat > "$PROJECT_ROOT/scripts/ralph/prd.json" << 'EOF'
 {
   "project": "DemoProject",
   "branchName": "ralph/test-feature",
@@ -209,7 +214,7 @@ cat > ralph/prd.json << 'EOF'
 EOF
 
 # Clear progress log
-echo "# Ralph Progress Log" > ralph/progress.txt
-echo "Started: $(date)" >> ralph/progress.txt
-echo "---" >> ralph/progress.txt
+echo "# Ralph Progress Log" > "$PROJECT_ROOT/scripts/ralph/progress.txt"
+echo "Started: $(date)" >> "$PROJECT_ROOT/scripts/ralph/progress.txt"
+echo "---" >> "$PROJECT_ROOT/scripts/ralph/progress.txt"
 ```
