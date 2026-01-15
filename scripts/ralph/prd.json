@@ -1,0 +1,48 @@
+{
+  "project": "DemoProject",
+  "branchName": "ralph/demo-feature",
+  "description": "Demo Feature - A simple feature to test Ralph workflow",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Add demo configuration file",
+      "description": "As a developer, I need a configuration file to store demo settings.",
+      "acceptanceCriteria": [
+        "Create config.json file in project root",
+        "Include at least 3 configuration options",
+        "Typecheck passes"
+      ],
+      "priority": 1,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-002",
+      "title": "Create README with setup instructions",
+      "description": "As a developer, I want clear setup instructions for this project.",
+      "acceptanceCriteria": [
+        "README.md exists in project root",
+        "Includes installation steps",
+        "Includes usage examples",
+        "Typecheck passes"
+      ],
+      "priority": 2,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-003",
+      "title": "Add package.json with dependencies",
+      "description": "As a developer, I need a package.json to manage project dependencies.",
+      "acceptanceCriteria": [
+        "package.json exists with name and version",
+        "Includes at least 2 dependencies",
+        "Includes scripts section with start and test commands",
+        "Typecheck passes"
+      ],
+      "priority": 3,
+      "passes": false,
+      "notes": ""
+    }
+  ]
+}
