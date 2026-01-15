@@ -57,8 +57,9 @@ You may need to configure OpenCode for your project:
    - Execute tests
 
 3. **Adjust the command in ralph.sh** if needed:
-   - The default command is: `opencode run --non-interactive`
-   - You may need to specify an agent: `opencode --agent build run --non-interactive`
+   - The default command is: `opencode run --format default`
+   - You may need to specify an agent: `opencode --agent build run`
+   - OpenCode will read the prompt from stdin and process it
    - Check OpenCode docs for the exact flags you need
 
 ## Differences from Amp
