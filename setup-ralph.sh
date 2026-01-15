@@ -1,13 +1,14 @@
 #!/bin/bash
-# Setup script to copy Ralph files from submodule to test-ralph
+# Setup script to copy Ralph files from submodule to scripts/ralph
 
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-RALPH_DIR="$SCRIPT_DIR/ralph"
-TARGET_DIR="$SCRIPT_DIR/scripts/ralph"
+PROJECT_ROOT="${PROJECT_ROOT:-$SCRIPT_DIR}"
+RALPH_DIR="$PROJECT_ROOT/ralph"
+TARGET_DIR="$PROJECT_ROOT/scripts/ralph"
 
-echo "Setting up Ralph in test-ralph"
+echo "Setting up Ralph in $TARGET_DIR"
 echo ""
 
 # Check if ralph submodule exists
@@ -15,6 +16,18 @@ if [ ! -d "$RALPH_DIR" ]; then
   echo "Error: ralph submodule not found at $RALPH_DIR"
   echo "Initialize it with: git submodule update --init --recursive"
   exit 1
+fi
+
+# Check if submodule is initialized (has files)
+if [ ! -f "$RALPH_DIR/ralph.sh" ]; then
+  echo "Ralph submodule directory exists but appears uninitialized."
+  echo "Initializing submodule..."
+  cd "$PROJECT_ROOT"
+  git submodule update --init --recursive ralph || {
+    echo "Error: Failed to initialize ralph submodule"
+    echo "Try manually: git submodule update --init --recursive"
+    exit 1
+  }
 fi
 
 # Create target directory
