@@ -21,31 +21,35 @@ This is a demo project for testing the Ralph autonomous AI agent workflow.
 
 ## Running Ralph
 
+Ralph is available as a git submodule in the `ralph/` folder. You can call it directly from there:
+
 To run Ralph with the default 10 iterations (auto-detects Amp or OpenCode):
 
 ```bash
-./scripts/ralph/ralph.sh
+./ralph/ralph.sh
 ```
 
 To run with a custom number of iterations:
 
 ```bash
-./scripts/ralph/ralph.sh 5
+./ralph/ralph.sh 5
 ```
 
 To explicitly use OpenCode instead of Amp:
 
 ```bash
-./scripts/ralph/ralph.sh 10 opencode
+./ralph/ralph.sh 10 opencode
 ```
 
 To explicitly use Amp:
 
 ```bash
-./scripts/ralph/ralph.sh 10 amp
+./ralph/ralph.sh 10 amp
 ```
 
-See `scripts/ralph/README-OPencode.md` for OpenCode-specific setup instructions.
+**Note:** Make sure you have `prd.json` and `progress.txt` in the `ralph/` folder, or create symlinks from your project root.
+
+See `ralph/README-OPencode.md` for OpenCode-specific setup instructions.
 
 ## Usage Examples
 
@@ -64,13 +68,13 @@ npm start
 ### Ralph Workflow Examples
 ```bash
 # Run Ralph with default settings
-./scripts/ralph/ralph.sh
+./ralph/ralph.sh
 
 # Run Ralph for 5 iterations
-./scripts/ralph/ralph.sh 5
+./ralph/ralph.sh 5
 
 # Run Ralph with OpenCode
-./scripts/ralph/ralph.sh 10 opencode
+./ralph/ralph.sh 10 opencode
 
 # Check project status
 npm run typecheck
@@ -78,14 +82,14 @@ npm run typecheck
 
 ## Files
 
-- `scripts/ralph/ralph.sh` - The main Ralph loop script
-- `scripts/ralph/prompt.md` - Instructions for each Amp iteration
-- `scripts/ralph/prd.json` - Product requirements document with user stories
-- `scripts/ralph/progress.txt` - Progress log and learnings
+- `ralph/ralph.sh` - The main Ralph loop script (git submodule)
+- `ralph/prompt.md` - Instructions for each iteration
+- `ralph/prd.json` - Product requirements document with user stories (create this in ralph/ folder)
+- `ralph/progress.txt` - Progress log and learnings (created automatically)
 
 ## Current PRD
 
-The current PRD (`scripts/ralph/prd.json`) contains three simple demo stories:
+The PRD (`ralph/prd.json`) should contain your user stories. Example structure:
 1. Add demo configuration file
 2. Create README with setup instructions
 3. Add package.json with dependencies
@@ -96,11 +100,24 @@ These are intentionally simple to test the Ralph workflow.
 
 ```bash
 # See which stories are done
-cat scripts/ralph/prd.json | jq '.userStories[] | {id, title, passes}'
+cat ralph/prd.json | jq '.userStories[] | {id, title, passes}'
 
 # See learnings from previous iterations
-cat scripts/ralph/progress.txt
+cat ralph/progress.txt
 
 # Check git history
 git log --oneline -10
+```
+
+## Using the Ralph Submodule
+
+The `ralph/` folder is a git submodule pointing to [https://github.com/martinvalentine/ralph.git](https://github.com/martinvalentine/ralph.git). To update it:
+
+```bash
+git submodule update --remote ralph
+```
+
+To initialize the submodule (if cloning this repo):
+```bash
+git submodule update --init --recursive
 ```
